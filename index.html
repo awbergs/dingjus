@@ -18,13 +18,18 @@
         {
             setInterval(function ()
             {
-                show(imgs[++index]);
-
-                if (index + 10 > imgs.length)
+                index++;
+                if(index >= imgs.length){
+                    more();
+                    index = 0;
+                }
+                else if (index + 10 > imgs.length)
                 {
                     more();
                 }
-            }, 3000)
+
+                show(imgs[index]);
+            }, 3000);
         }
 
         function cache(items)
@@ -45,6 +50,7 @@
                         show(this);
                         start();
                     }
+
                     imgs.push(this);
 
                     if (loaded === items.length)
