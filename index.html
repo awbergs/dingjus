@@ -1,6 +1,6 @@
 <html>
 <body>
-    <img id="iamg" src="http://media.giphy.com/media/cz9T022iaZRde/giphy.gif" height="100%" width="100%" />
+    <img id="image" src="http://media.giphy.com/media/cz9T022iaZRde/giphy.gif" height="100%" width="100%" />
     <script type='text/javascript'>
 
         var offset = 0;
@@ -8,10 +8,12 @@
         var imgs = [];
         var index = 0;
         var visible = false;
+        
+        var main = document.getElementById('image');
 
         function show(img)
         {
-            document.getElementById("iamg").src = img.src;
+            main.src = img.src;
         }
 
         function start()
