@@ -1,72 +1,85 @@
 <html>
 <body>
-  <img src="http://media.giphy.com/media/cz9T022iaZRde/giphy.gif" height="100%" width="100%" />
+    <img id="iamg" src="http://media.giphy.com/media/cz9T022iaZRde/giphy.gif" height="100%" width="100%" />
+    <script type='text/javascript'>
 
-<script type='text/javascript'>
-  
-  var offset = 0;
-  
-  var imgs = [];
-  var index = 0;
-  var visible = false;
-  
-  function show(img){
-    document.body.img.src = img.src;
-  }
-  
-  function start(){
-    setInterval(function(){
-      show(imgs[++index]);
-    },1000)
-  }
-  
-  function cache(items){
-    
-    var loaded = 0;
-    
-    for(var i = 0; i < items.length; i ++){
-      var img = new Image();
-      img.onload = function(){
-        loaded ++;
-        
-        if(loaded > 1 && !visible){
-          visible = true;
-          show(img);
-          start();
+        var offset = 0;
+
+        var imgs = [];
+        var index = 0;
+        var visible = false;
+
+        function show(img)
+        {
+            document.getElementById("iamg").src = img.src;
         }
-        imgs.push(img);
-      
-        if(loaded === items.length){
-          loaded = 0;
-          offset += items.length;
-          more();
+
+        function start()
+        {
+            setInterval(function ()
+            {
+                show(imgs[++index]);
+
+                if (index + 10 > imgs.length)
+                {
+                    more();
+                }
+            }, 3000)
         }
-      }
-      
-      img.src = items[i]
-    }
-    
-  }
-  
-  function more(){
-    var xhr = new XMLHttpRequest();
-    
-    xhr.onreadystatechange = function(){
-      if(xhr.readyState == 4){
-        
-        var data = JSON.parse(xhr.responseText.data).data;
-        cache(data);
-        offset += data.length;
-        
-      }
-    }
-    
-    xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset="+offset)
-    xhr.send(null);
-  }
-  
-  more();
-  
-</script>
+
+        function cache(items)
+        {
+
+            var loaded = 0;
+
+            for (var i = 0; i < items.length; i++)
+            {
+                var img = new Image();
+                img.onload = function ()
+                {
+                    loaded++;
+
+                    if (loaded > 1 && !visible)
+                    {
+                        visible = true;
+                        show(this);
+                        start();
+                    }
+                    imgs.push(this);
+
+                    if (loaded === items.length)
+                    {
+                        loaded = 0;
+                        offset += items.length;
+                    }
+                }
+                img.src = "http://media.giphy.com/media/" + items[i].id + "/giphy.gif";
+            }
+
+        }
+
+        function more()
+        {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.readyState == 4)
+                {
+
+                    var data = JSON.parse(xhr.responseText).data;
+                    cache(data);
+                    offset += data.length;
+
+                }
+            }
+
+            xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset=" + offset)
+            xhr.send(null);
+        }
+
+        more();
+
+    </script>
 </body>
 </html>
