@@ -34,7 +34,7 @@
             }, 3000);
         }
 
-        function cache(items)
+        function crache(items)
         {
 
             var loaded = 0;
@@ -79,7 +79,7 @@
                     if (xhr.readyState == 4)
                     {
                         var data = JSON.parse(xhr.responseText).data;
-                        cache(data);
+                        crache(data);
                         offset += data.length;
                         gettingMore = false;
                     }
