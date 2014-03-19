@@ -35,7 +35,14 @@
           start();
         }
         imgs.push(img);
+      
+        if(loaded === items.length){
+          loaded = 0;
+          offset += items.length;
+          more();
+        }
       }
+      
       img.src = items[i]
     }
     
@@ -57,6 +64,8 @@
     xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset="+offset)
     xhr.send(null);
   }
+  
+  more();
   
 </script>
 </body>
