@@ -1,7 +1,54 @@
 <html>
 <body>
+  <img src="http://media.giphy.com/media/cz9T022iaZRde/giphy.gif" height="100%" width="100%" />
 
 <script type='text/javascript'>
+  
+  var offset = 0;
+  
+  var imgs = [];
+  var visible = false;
+  
+  function show(img){
+    
+  }
+  
+  function cache(items){
+    
+    var loaded = 0;
+    
+    for(var i = 0; i < items.length; i ++){
+      var img = new Image();
+      img.onload = function(){
+        loaded ++;
+        
+        if(loaded > 1 && !visible){
+          visible = true;
+          show(img);
+        }
+        imgs.push(img);
+      }
+      img.src = items[i]
+    }
+    
+  }
+  
+  function more(){
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4){
+        
+        cache(xhr.responseText.data);
+        offset += xhr.responseText.data.length;
+        
+      }
+    }
+    
+    xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset="+offset)
+    xhr.send(null);
+  }
+  
 </script>
 </body>
 </html>
