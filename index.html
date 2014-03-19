@@ -56,7 +56,6 @@
                     if (loaded === items.length)
                     {
                         loaded = 0;
-                        offset += items.length;
                     }
                 }
                 img.src = "http://media.giphy.com/media/" + items[i].id + "/giphy.gif";
@@ -64,24 +63,29 @@
 
         }
 
+        var gettingMore = false;
+
         function more()
         {
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function ()
+            if (!gettingMore)
             {
-                if (xhr.readyState == 4)
+                gettingMore = true;
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function ()
                 {
-
-                    var data = JSON.parse(xhr.responseText).data;
-                    cache(data);
-                    offset += data.length;
-
+                    if (xhr.readyState == 4)
+                    {
+                        var data = JSON.parse(xhr.responseText).data;
+                        cache(data);
+                        offset += data.length;
+                        gettingMore = false;
+                    }
                 }
-            }
 
-            xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset=" + offset)
-            xhr.send(null);
+                xhr.open("GET", "http://api.giphy.com/v1/gifs/search?q=steve+brule&api_key=dc6zaTOxFJmzC&offset=" + offset)
+                xhr.send(null);
+            }
         }
 
         more();
