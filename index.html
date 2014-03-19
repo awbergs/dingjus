@@ -47,8 +47,9 @@
     xhr.onreadystatechange = function(){
       if(xhr.readyState == 4){
         
-        cache(xhr.responseText.data);
-        offset += xhr.responseText.data.length;
+        var data = JSON.parse(xhr.responseText.data).data;
+        cache(data);
+        offset += data.length;
         
       }
     }
