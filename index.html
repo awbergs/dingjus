@@ -7,10 +7,17 @@
   var offset = 0;
   
   var imgs = [];
+  var index = 0;
   var visible = false;
   
   function show(img){
-    
+    document.body.img.src = img.src;
+  }
+  
+  function start(){
+    setInterval(function(){
+      show(imgs[++index]);
+    },1000)
   }
   
   function cache(items){
@@ -25,6 +32,7 @@
         if(loaded > 1 && !visible){
           visible = true;
           show(img);
+          start();
         }
         imgs.push(img);
       }
